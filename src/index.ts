@@ -16,7 +16,13 @@ const app = express();
 const port = process.env.PORT || 7788;
 
 // 中间件
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // 禁用CSP以允许Swagger UI正常工作
+    crossOriginEmbedderPolicy: false, // 禁用COEP
+    crossOriginOpenerPolicy: false, // 禁用COOP
+  })
+);
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,
@@ -40,7 +46,20 @@ const swaggerOptions = {
         url: `http://localhost:${port}`,
         description: 'Development server',
       },
+      {
+        url: `http://47.96.135.243:${port}`,
+        description: 'Production server',
+      },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   apis: ['./src/routes/*.ts'],
 };

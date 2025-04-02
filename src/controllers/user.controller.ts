@@ -58,6 +58,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
     res.status(201).json({
       status: 'success',
+      code: '200',
       data: {
         token,
         user: {
@@ -93,6 +94,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     res.json({
       status: 'success',
+      code: '200',
       data: {
         token,
         user: {
