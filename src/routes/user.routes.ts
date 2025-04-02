@@ -14,6 +14,24 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     ApiResponse:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: string
+ *           description: 响应代码，成功为'200'，失败为对应错误代码
+ *         data:
+ *           type: object
+ *           description: 响应数据，失败时为null
+ *         message:
+ *           type: string
+ *           description: 响应消息，成功时为'成功'，失败时为错误消息
+ */
+
+/**
+ * @swagger
  * /api/users/register:
  *   post:
  *     summary: 用户注册
@@ -36,10 +54,18 @@ const router = Router();
  *               email:
  *                 type: string
  *     responses:
- *       201:
+ *       200:
  *         description: 注册成功
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  *       400:
  *         description: 用户名或邮箱已存在
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ApiResponse'
  */
 router.post('/register', register);
 

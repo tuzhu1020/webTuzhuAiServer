@@ -57,7 +57,6 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     });
 
     res.status(201).json({
-      status: 'success',
       code: '200',
       data: {
         token,
@@ -68,6 +67,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
           role: user.role,
         },
       },
+      message: '注册成功',
     });
   } catch (error) {
     next(error);
@@ -93,7 +93,6 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     });
 
     res.json({
-      status: 'success',
       code: '200',
       data: {
         token,
@@ -104,6 +103,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
           role: user.role,
         },
       },
+      message: '登录成功',
     });
   } catch (error) {
     next(error);
@@ -114,8 +114,9 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
   try {
     const user = await User.findById(req.user._id).select('-password');
     res.json({
-      status: 'success',
+      code: '200',
       data: { user },
+      message: '获取成功',
     });
   } catch (error) {
     next(error);

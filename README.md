@@ -857,3 +857,29 @@ Content-Type: application/json
 2. 需要有效的 JWT token 进行身份验证
 3. messages 参数为必填，且必须是数组格式
 4. model 参数可选，默认为 "deepseek-r1:32b"
+
+## API 接口规范
+
+### 统一响应格式
+
+所有API接口返回统一的JSON格式：
+
+```json
+{
+  "code": "200", // 响应代码，成功为'200'，失败为对应错误代码
+  "data": {}, // 响应数据，失败时为null
+  "message": "成功" // 响应消息，成功时为'成功'，失败时为错误消息
+}
+```
+
+### 认证
+
+API认证采用JWT Token方式，需在请求头中添加：
+
+```
+Authorization: Bearer <token>
+```
+
+### API文档
+
+服务启动后，访问 `http://服务器地址:7788/api-docs` 查看API文档。

@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { errorHandler } from './middleware/errorHandler';
+import { responseHandler } from './middleware/responseHandler';
 import { logger } from './utils/logger';
 import routes from './routes';
 
@@ -32,23 +33,29 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 静态文件服务
+app.use(express.static('public'));
+
+// 全局响应拦截中间件，必须在路由之前注册
+app.use(responseHandler);
+
 // Swagger配置
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Storm API Documentation',
+      title: 'AI对话系统接口文档',
       version: '1.0.0',
-      description: 'API documentation for Storm application',
+      description: 'StormNode API 接口文档',
     },
     servers: [
       {
         url: `http://localhost:${port}`,
-        description: 'Development server',
+        description: '开发环境服务器',
       },
       {
         url: `http://47.96.135.243:${port}`,
-        description: 'Production server',
+        description: '生产环境服务器',
       },
     ],
     components: {
@@ -65,7 +72,21 @@ const swaggerOptions = {
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'AI对话系统接口文档',
+    customfavIcon: '/favicon.ico',
+    swaggerOptions: {
+      defaultModelsExpandDepth: -1, // 隐藏Models
+      docExpansion: 'list', // none | list | full
+      persistAuthorization: true,
+      filter: true,
+    },
+  })
+);
 
 // 路由
 app.use('/api', routes);

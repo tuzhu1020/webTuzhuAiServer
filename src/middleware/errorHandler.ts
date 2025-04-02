@@ -23,16 +23,20 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   if (err instanceof AppError) {
-    logger.error(`${err.statusCode} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+    logger.error(
+      `${err.statusCode} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+    );
     return res.status(err.statusCode).json({
-      status: err.status,
+      code: String(err.statusCode),
+      data: null,
       message: err.message,
     });
   }
 
   logger.error(`${500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
   return res.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
+    code: '500',
+    data: null,
+    message: '服务器内部错误',
   });
-}; 
+};
