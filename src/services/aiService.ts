@@ -14,18 +14,33 @@ export class AIService {
   /**
    * 创建 AI 聊天完成
    */
-  async createChatCompletion(messages: any[], model: string = 'deepseek-chat') {
+  async createChatCompletion(
+    messages: any[],
+    model: string = 'deepseek-chat',
+    stream: boolean = false
+  ) {
     try {
-      const completion = await this.openai.chat.completions.create({
-        messages: messages.map((msg) => ({
-          role: msg.role,
-          content: msg.content,
-        })),
-        model,
-        stream: true,
-      });
-
-      return completion;
+      if (stream) {
+        // 明确返回流式响应
+        return await this.openai.chat.completions.create({
+          messages: messages.map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+          model,
+          stream: true,
+        });
+      } else {
+        // 返回常规响应
+        return await this.openai.chat.completions.create({
+          messages: messages.map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+          model,
+          stream: false,
+        });
+      }
     } catch (error) {
       throw new AppError('AI 服务调用失败', 500);
     }
