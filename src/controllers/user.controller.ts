@@ -80,12 +80,12 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     const user = await User.findOne({ username });
     if (!user) {
-      throw new AppError('用户名或密码错误', 401);
+      throw new AppError('用户名或密码错误111', 401);
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      throw new AppError('用户名或密码错误', 401);
+      throw new AppError('用户名或密码错误111', 401);
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'default_secret', {
