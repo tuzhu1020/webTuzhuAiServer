@@ -101,6 +101,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
           username: user.username,
           email: user.email,
           role: user.role,
+          status: user.status,
+          img:'http://guojuntuzhu.xin:6688/assets/login-bg-9nI4RB0u.jpg',
         },
       },
       message: '登录成功',
