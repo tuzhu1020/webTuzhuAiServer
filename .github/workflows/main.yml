@@ -1,0 +1,42 @@
+name: Deploy Node Backend to Baota
+
+on:
+  push:
+    branches:
+      - main # ← 这里请确认你使用的分支是 main，或者换成你实际使用的分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Upload dist via SCP (password login)
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          source: "dist"
+          target: "/data/devops/backend/web-tuzhu/StormNode"
+          overwrite: true
+
+      - name: Restart PM2 via SSH (password login)
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            cd /data/devops/backend/web-tuzhu/StormNode
+            pm2 reload StormNode
