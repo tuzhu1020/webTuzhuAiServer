@@ -3,6 +3,7 @@ import userRoutes from './user.routes';
 import uploadRoutes from './upload.routes';
 import chatRoutes from './chat';
 import aiRoutes from './ai';
+import wpsRoutes from './wps.routes';
 
 const router = Router();
 
@@ -22,6 +23,9 @@ router.use('/chat', chatRoutes);
 
 // AI 路由
 router.use('/v1/chat', aiRoutes);
+
+// WPS 路由
+router.use('/wps', wpsRoutes);
 
 // 在这里添加其他路由
 // router.use('/auth', authRoutes);
