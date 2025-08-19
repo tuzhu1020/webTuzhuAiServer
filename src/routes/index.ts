@@ -4,6 +4,8 @@ import uploadRoutes from './upload.routes';
 import chatRoutes from './chat';
 import aiRoutes from './ai';
 import wpsRoutes from './wps.routes';
+import videoRoutes from './video.routes';
+import danmakuRoutes from './danmaku.routes';
 
 const router = Router();
 
@@ -26,6 +28,10 @@ router.use('/v1/chat', aiRoutes);
 
 // WPS 路由
 router.use('/wps', wpsRoutes);
+
+// 视频与弹幕路由
+router.use('/videos', videoRoutes);
+router.use('/danmaku', danmakuRoutes);
 
 // 在这里添加其他路由
 // router.use('/auth', authRoutes);
