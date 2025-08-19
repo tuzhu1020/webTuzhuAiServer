@@ -221,3 +221,16 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
     next(error);
   }
 };
+
+// 退出登录（JWT 无状态，这里仅返回成功，前端清理令牌）
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    return res.json({
+      code: '200',
+      data: null,
+      message: '注销成功',
+    });
+  } catch (error) {
+    next(error);
+  }
+};

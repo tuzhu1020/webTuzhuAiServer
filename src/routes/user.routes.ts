@@ -7,6 +7,7 @@ import {
   changePassword,
   forgotPassword,
   resetPassword,
+  logout,
 } from '../controllers/user.controller';
 import { auth } from '../middleware/auth.middleware';
 
@@ -96,6 +97,20 @@ router.post('/register', register);
  *         description: 用户名或密码错误
  */
 router.post('/login', login);
+
+/**
+ * @swagger
+ * /api/users/logout:
+ *   post:
+ *     summary: 退出登录（前端清理令牌，服务端返回成功）
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: 注销成功
+ */
+router.post('/logout', auth, logout);
 
 /**
  * @swagger
