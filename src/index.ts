@@ -35,6 +35,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 静态文件服务
 app.use(express.static('public'));
+// 提供上传文件的静态访问
+app.use('/uploads', express.static('uploads'));
 
 // 全局响应拦截中间件，必须在路由之前注册
 app.use(responseHandler);
