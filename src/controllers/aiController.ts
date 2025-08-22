@@ -12,7 +12,7 @@ export class AIController {
   }
 
   /**
-   * AI 聊天完成
+   * AI 聊天完成11
    */
   async chatCompletions(req: Request, res: Response) {
     try {
