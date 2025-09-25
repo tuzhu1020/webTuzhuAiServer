@@ -39,7 +39,7 @@ export class AIController {
           model,
           true
         )) as Stream<ChatCompletionChunk>;
-
+        console.log('completion', completion);
         // 处理流式响应
         for await (const chunk of completion) {
           const data = {

@@ -7,7 +7,7 @@ export class AIService {
   constructor() {
     this.openai = new OpenAI({
       baseURL: 'https://api.deepseek.com',
-      apiKey: process.env.DEEPSEEK_API_KEY || 'sk-24d7fd091a1f4c01820a6afca5116056',
+      apiKey: process.env.DEEPSEEK_API_KEY || 'sk-05c8d8750d1a4ec082f2549751e34a54',
     });
   }
 
